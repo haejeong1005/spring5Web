@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.newlecture.web.entity.Notice;
 
@@ -20,24 +22,30 @@ import com.newlecture.web.entity.Notice;
 @RequestMapping("/admin/notice/")
 public class NoticeController {
 	
-	@RequestMapping("list")
-	@ResponseBody
+	@RequestMapping("list")	
 	public String list(){
 		
-		return "admin notice list 입니데이";
+		//return "/WEB-INF/views/admin/notice/list.jsp";
+		//return "admin/notice/list";
+		return "admin.notice.list";
 	}
 	
 	//@RequestMapping(value="reg", method=RequestMethod.GET)
 	@GetMapping("reg")
-	@ResponseBody
 	public String reg(){
 		
-		return "/WEB-INF/views/admin/notice/reg.jsp";
+		//return "admin/notice/reg";
+		return "admin.notice.reg";
 	}
 	
 	//@RequestMapping(value="reg", method=RequestMethod.POST)
 	@PostMapping("reg")
-	public String reg(Notice notice/*String title, String content*/ /* HttpServletRequest request */){		
+	public String reg(/* Notice notice */
+			@RequestParam("t") String title, 
+			@RequestParam(value="c", defaultValue="내용없음") String content,
+			MultipartFile file
+			/* HttpServletRequest request */){
+		
 		/*
 		 * String title = request.getParameter("title"); 
 		 * String content = request.getParameter("content");
@@ -48,26 +56,29 @@ public class NoticeController {
 		notice.setContent(content);
 		System.out.println(title);
 		System.out.println(content);*/
+		System.out.println(title);
+		System.out.println(content);
+		System.out.println(file.getOriginalFilename());
+		
+		//file.getInputStream();
 		
 		//?.insert(notice);
 		
-		System.out.println(notice.getTitle());
+		//System.out.println(notice.getTitle());
 		
 		return "redirect:list";
 	}
 	
-	@RequestMapping("detail")
-	@ResponseBody
+	@RequestMapping("detail")	
 	public String detail(){
 		
-		return "하하하";
+		return "admin/notice/detail";
 	}
 	
-	@RequestMapping("edit")
-	@ResponseBody
+	@RequestMapping("edit")	
 	public String edit(){
 		
-		return "하하하";
+		return "admin/notice/edit";
 	}
 	
 }
